@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <contact>
+            <forms>
+                <notification_template>contact_forms_notification_template</notification_template>
+                <sender_email_identity>general</sender_email_identity>
+                <recipient_email_identity>general</recipient_email_identity>
+            </forms>
+        </contact>
+    </default>
+</config>

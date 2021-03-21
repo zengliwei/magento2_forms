@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2020 Zengliwei
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+  ~ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+  ~ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+  ~ permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+  ~ Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+  ~ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE AUTHORS
+  ~ OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+  ~ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  -->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <table name="forms" resource="default" engine="innodb" comment="Forms Table">
+        <column xsi:type="smallint" name="id" comment="Form ID"
+                unsigned="true" nullable="false" identity="true"/>
+        <column xsi:type="varchar" name="identifier" comment="Identifier"
+                nullable="false" length="64"/>
+        <column xsi:type="varchar" name="name" comment="Name"
+                nullable="false" length="256"/>
+        <column xsi:type="varchar" name="template" comment="Template"
+                nullable="false" length="256"/>
+        <column xsi:type="varchar" name="from_name" comment="From Name"
+                nullable="true" length="256"/>
+        <column xsi:type="varchar" name="from_email" comment="From Email"
+                nullable="true" length="256"/>
+        <column xsi:type="varchar" name="to_name" comment="To Name"
+                nullable="true" length="256"/>
+        <column xsi:type="varchar" name="to_email" comment="To Email"
+                nullable="true" length="256"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="FORM_IDENTIFIER">
+            <column name="identifier"/>
+        </constraint>
+        <index referenceId="FORM_NAME" indexType="fulltext">
+            <column name="name"/>
+        </index>
+    </table>
+
+    <table name="form_post_records" resource="default" engine="innodb" comment="Form Post Records Table">
+        <column xsi:type="smallint" name="id" comment="Record ID"
+                unsigned="true" nullable="false" identity="true"/>
+        <column xsi:type="smallint" name="form_id" comment="Form ID"
+                unsigned="true" nullable="false"/>
+        <column xsi:type="varchar" name="name" comment="Name"
+                nullable="false" length="256"/>
+        <column xsi:type="varchar" name="from_name" comment="From Name"
+                nullable="true" length="256"/>
+        <column xsi:type="varchar" name="from_email" comment="From Email"
+                nullable="true" length="256"/>
+        <column xsi:type="varchar" name="to_name" comment="To Name"
+                nullable="true" length="256"/>
+        <column xsi:type="varchar" name="to_email" comment="To Email"
+                nullable="true" length="256"/>
+        <column xsi:type="text" name="data" comment="Data"
+                nullable="false"/>
+        <column xsi:type="timestamp" name="created_at" comment="Created At"
+                on_update="false" nullable="false" default="CURRENT_TIMESTAMP"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <index referenceId="FORM_NAME" indexType="fulltext">
+            <column name="name"/>
+        </index>
+        <index referenceId="FORM_POST_CREATED_AT" indexType="btree">
+            <column name="created_at"/>
+        </index>
+    </table>
+
+</schema>

@@ -1,0 +1,16 @@
+<!--@subject {{trans "You received contact from %store_name" store_name=$store.frontend_name}} @-->
+<!--@vars {
+"var customer": "Customer",
+"var formattedAddress": "Formatted Address"
+} @-->
+{{template config_path="design/email/header_template"}}
+
+<p>Hi Administrator,</p>
+<p>You received a contact from {{var store.frontend_name}}:</p>
+<ul>
+    {{for row in data}}
+    <li>{{var row.field}}: {{var row.value}}</li>
+    {{/for}}
+</ul>
+
+{{template config_path="design/email/footer_template"}}
