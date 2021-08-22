@@ -28,7 +28,7 @@ use Common\Forms\Model\ResourceModel\Form\PostRecord\Collection;
  */
 class DataProvider extends AbstractDataProvider
 {
-    protected $persistKey = 'forms_post_record';
+    protected string $persistKey = 'forms_post_record';
 
     /**
      * @inheritDoc
