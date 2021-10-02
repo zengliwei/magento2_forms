@@ -5,7 +5,7 @@ Help to create and handle customized forms, show as widgets.
 ## Installation
 
 1. Execute this command to download the module through composer:<br>
-   `composer require CrazyCat_Forms`
+   `composer require crazycat/module-magento2-forms`
 
 2. Execute these commands to enable the modules:<br>
    `php bin/magento module:enable CrazyCat_Base`<br>
