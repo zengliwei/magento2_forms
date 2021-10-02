@@ -1,31 +1,19 @@
 <?xml version="1.0"?>
 <!--
-  ~ Copyright (c) 2020 Zengliwei
-  ~
-  ~ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-  ~ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
-  ~ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
-  ~ permit persons to whom the Software is furnished to do so, subject to the following conditions:
-  ~
-  ~ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
-  ~ Software.
-  ~
-  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-  ~ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE AUTHORS
-  ~ OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-  ~ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  ~ Copyright (c) Zengliwei. All rights reserved.
+  ~ Each source file in this distribution is licensed under OSL 3.0, see LICENSE for details.
   -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Common_Forms::forms" module="Common_Forms"
-             parent="Magento_Backend::content" resource="Common_Forms::blog"
+        <add id="CrazyCat_Forms::forms" module="CrazyCat_Forms"
+             parent="Magento_Backend::content" resource="CrazyCat_Forms::blog"
              title="Forms" translate="title" sortOrder="10"/>
-        <add id="Common_Forms::forms_form" module="Common_Forms"
-             parent="Common_Forms::forms" resource="Common_Forms::forms_form"
+        <add id="CrazyCat_Forms::forms_form" module="CrazyCat_Forms"
+             parent="CrazyCat_Forms::forms" resource="CrazyCat_Forms::forms_form"
              title="Forms" translate="title" sortOrder="10" action="forms/form"/>
-        <add id="Common_Forms::forms_post_record" module="Common_Forms"
-             parent="Common_Forms::forms" resource="Common_Forms::forms_post_record"
+        <add id="CrazyCat_Forms::forms_post_record" module="CrazyCat_Forms"
+             parent="CrazyCat_Forms::forms" resource="CrazyCat_Forms::forms_post_record"
              title="Post Records" translate="title" sortOrder="20" action="forms/postRecord"/>
     </menu>
 </config>

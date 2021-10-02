@@ -1,0 +1,22 @@
+{
+    "name": "crazycat/module-magento2-forms",
+    "description": "Customized forms management for Magento 2",
+    "type": "magento2-module",
+    "version": "1.0.1",
+    "license": [
+        "OSL-3.0"
+    ],
+    "require": {
+        "php": "~7.4.0",
+        "magento/framework": "103.0.*",
+        "crazycat/module-magento2-base": "~1.0.1"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "CrazyCat\\Forms\\": ""
+        }
+    }
+}

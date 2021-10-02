@@ -1,26 +1,14 @@
 <?php
-/*
- * Copyright (c) 2020 Zengliwei
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE AUTHORS
- * OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+/**
+ * Copyright (c) Zengliwei. All rights reserved.
+ * Each source file in this distribution is licensed under OSL 3.0, see LICENSE for details.
  */
 
-namespace Common\Forms\Block\Adminhtml\Form\Widget;
+namespace CrazyCat\Forms\Block\Adminhtml\Form\Widget;
 
-use Common\Forms\Model\FormFactory;
-use Common\Forms\Model\ResourceModel\Form as ResourceModel;
-use Common\Forms\Model\ResourceModel\Form\CollectionFactory;
+use CrazyCat\Forms\Model\FormFactory;
+use CrazyCat\Forms\Model\ResourceModel\Form as ResourceModel;
+use CrazyCat\Forms\Model\ResourceModel\Form\CollectionFactory;
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Block\Widget\Grid\Extended;
 use Magento\Backend\Helper\Data;
@@ -28,7 +16,6 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\Exception\LocalizedException;
 
 /**
- * @package Common\Forms
  * @author  Zengliwei <zengliwei@163.com>
  * @url https://github.com/zengliwei/magento2_forms
  */
@@ -37,18 +24,26 @@ class Chooser extends Extended
     /**
      * @var CollectionFactory
      */
-    private CollectionFactory $collectionFactory;
+    private $collectionFactory;
 
     /**
      * @var FormFactory
      */
-    private FormFactory $formFactory;
+    private $formFactory;
 
     /**
      * @var ResourceModel
      */
-    private ResourceModel $resourceModel;
+    private $resourceModel;
 
+    /**
+     * @param CollectionFactory $collectionFactory
+     * @param FormFactory       $formFactory
+     * @param ResourceModel     $resourceModel
+     * @param Context           $context
+     * @param Data              $backendHelper
+     * @param array             $data
+     */
     public function __construct(
         CollectionFactory $collectionFactory,
         FormFactory $formFactory,
@@ -91,6 +86,8 @@ EOF;
     }
 
     /**
+     * Prepare element HTML
+     *
      * @param AbstractElement $element
      * @return AbstractElement
      * @throws LocalizedException
@@ -98,16 +95,16 @@ EOF;
      */
     public function prepareElementHtml(AbstractElement $element)
     {
-        /* @var \Magento\Widget\Block\Adminhtml\Widget\Chooser $block */
+        /** @var \Magento\Widget\Block\Adminhtml\Widget\Chooser $block */
         $block = $this->getLayout()->createBlock(\Magento\Widget\Block\Adminhtml\Widget\Chooser::class);
         $uid = $this->mathRandom->getUniqueHash($element->getId());
         $block->addData(
             [
-                'element'     => $element,
-                'uniq_id'     => $uid,
-                'config'      => $this->getData('config'),
+                'element' => $element,
+                'uniq_id' => $uid,
+                'config' => $this->getData('config'),
                 'fieldset_id' => $this->getData('fieldset_id'),
-                'source_url'  => $this->getUrl('forms/form_widget/chooser', ['uid' => $uid])
+                'source_url' => $this->getUrl('forms/form_widget/chooser', ['uid' => $uid])
             ]
         );
         if (($id = $element->getData('value'))) {

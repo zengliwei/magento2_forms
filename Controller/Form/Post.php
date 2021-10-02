@@ -1,29 +1,17 @@
 <?php
-/*
- * Copyright (c) 2020 Zengliwei
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFINGEMENT. IN NO EVENT SHALL THE AUTHORS
- * OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+/**
+ * Copyright (c) Zengliwei. All rights reserved.
+ * Each source file in this distribution is licensed under OSL 3.0, see LICENSE for details.
  */
 
-namespace Common\Forms\Controller\Form;
+namespace CrazyCat\Forms\Controller\Form;
 
-use Common\Forms\Model\Form;
-use Common\Forms\Model\Form\PostRecord;
-use Common\Forms\Model\Form\PostRecordFactory;
-use Common\Forms\Model\FormFactory;
-use Common\Forms\Model\ResourceModel\Form as ResourceForm;
-use Common\Forms\Model\ResourceModel\Form\PostRecord as ResourceRecord;
+use CrazyCat\Forms\Model\Form;
+use CrazyCat\Forms\Model\Form\PostRecord;
+use CrazyCat\Forms\Model\Form\PostRecordFactory;
+use CrazyCat\Forms\Model\FormFactory;
+use CrazyCat\Forms\Model\ResourceModel\Form as ResourceForm;
+use CrazyCat\Forms\Model\ResourceModel\Form\PostRecord as ResourceRecord;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
@@ -39,7 +27,6 @@ use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 /**
- * @package Common\Forms
  * @author  Zengliwei <zengliwei@163.com>
  * @url https://github.com/zengliwei/magento2_forms
  */
@@ -48,47 +35,47 @@ class Post extends Action implements HttpPostActionInterface
     /**
      * @var FormFactory
      */
-    private FormFactory $formFactory;
+    private $formFactory;
 
     /**
      * @var PostRecordFactory
      */
-    protected PostRecordFactory $postRecordFactory;
+    protected $postRecordFactory;
 
     /**
      * @var ResourceForm
      */
-    private ResourceForm $resourceForm;
+    private $resourceForm;
 
     /**
      * @var ResourceRecord
      */
-    protected ResourceRecord $resourceRecord;
+    protected $resourceRecord;
 
     /**
      * @var ScopeConfigInterface
      */
-    protected ScopeConfigInterface $scopeConfig;
+    protected $scopeConfig;
 
     /**
      * @var SenderResolverInterface
      */
-    protected SenderResolverInterface $senderResolver;
+    protected $senderResolver;
 
     /**
      * @var StoreManagerInterface
      */
-    protected StoreManagerInterface $storeManager;
+    protected $storeManager;
 
     /**
      * @var DecoderInterface
      */
-    protected DecoderInterface $urlDecoder;
+    protected $urlDecoder;
 
     /**
      * @var TransportBuilder
      */
-    protected TransportBuilder $transportBuilder;
+    protected $transportBuilder;
 
     /**
      * @param DecoderInterface        $urlDecoder
@@ -131,14 +118,14 @@ class Post extends Action implements HttpPostActionInterface
      */
     public function execute()
     {
-        /* @var $resultRedirect Redirect */
+        /** @var $resultRedirect Redirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
 
         $redirectUrl = $this->urlDecoder->decode(
             $this->getRequest()->getParam(ActionInterface::PARAM_NAME_URL_ENCODED)
         );
 
-        /* @var $form Form */
+        /** @var $form Form */
         $formId = $this->getRequest()->getParam('id');
         $form = $this->formFactory->create();
         $this->resourceForm->load($form, $formId);
@@ -170,7 +157,7 @@ class Post extends Action implements HttpPostActionInterface
         }
 
         try {
-            /* @var $postRecord PostRecord */
+            /** @var $postRecord PostRecord */
             $post = $this->getRequest()->getPostValue('data');
             $postRecord = $this->postRecordFactory->create();
             $this->resourceRecord->save(
