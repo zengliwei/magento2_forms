@@ -33,7 +33,7 @@
             </item>
         </argument>
         <dataProvider class="CrazyCat\Forms\Model\Form\PostRecord\DataProvider"
-                      name="forms_post_record_view_post_record_data_provider">
+                      name="forms_post_record_view_data_provider">
             <settings>
                 <requestFieldName>id</requestFieldName>
                 <primaryFieldName>id</primaryFieldName>
@@ -72,11 +72,18 @@
                 <elementTmpl>ui/form/element/text</elementTmpl>
             </settings>
         </field>
+        <field name="created_at" formElement="input">
+            <settings>
+                <label translate="true">Post Time</label>
+                <dataScope>data.created_at</dataScope>
+                <elementTmpl>ui/form/element/text</elementTmpl>
+            </settings>
+        </field>
         <field name="data" formElement="input">
             <settings>
-                <label translate="true">Data</label>
+                <label translate="true">Form Data</label>
                 <dataScope>data.data</dataScope>
-                <elementTmpl>ui/form/element/text</elementTmpl>
+                <elementTmpl>CrazyCat_Forms/form/element/form-data</elementTmpl>
             </settings>
         </field>
     </fieldset>

@@ -11,10 +11,13 @@
 
 <p>Hi Administrator,</p>
 <p>You received a contact from {{var store.frontend_name}}:</p>
-<ul>
+<table>
     {{for row in data}}
-    <li>{{var row.field}}: {{var row.value}}</li>
+    <tr>
+        <th style="padding: 5px 18px 5px 30px; text-align: right;">{{var row.field}}</th>
+        <td style="padding: 5px 0;">{{var row.value}}</td>
+    </tr>
     {{/for}}
-</ul>
+</table>
 
 {{template config_path="design/email/footer_template"}}

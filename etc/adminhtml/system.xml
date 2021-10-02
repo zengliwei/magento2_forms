@@ -16,21 +16,6 @@
                     <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
                     <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
                 </field>
-                <field id="sender_email_identity" translate="label" type="select" sortOrder="20"
-                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
-                    <label>Default Email Sender</label>
-                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
-                </field>
-                <field id="to_name" translate="label" type="text" sortOrder="30"
-                       showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Default Recipient Name</label>
-                    <validate>required-entry</validate>
-                </field>
-                <field id="to_email" translate="label" type="text" sortOrder="40"
-                       showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Default Recipient Email</label>
-                    <validate>required-entry validate-email</validate>
-                </field>
             </group>
         </section>
     </system>

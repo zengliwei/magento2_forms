@@ -27,4 +27,26 @@ class DataProvider extends AbstractDataProvider
     {
         $this->initCollection(Collection::class);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getData()
+    {
+        parent::getData();
+
+        foreach ($this->loadedData as &$data) {
+            if (empty($data['data']['data'])) {
+                continue;
+            }
+
+            $source = json_decode($data['data']['data'], true);
+            $data['data']['data'] = [];
+            foreach ($source as $field => $value) {
+                $data['data']['data'][] = ['field' => $field, 'value' => $value];
+            }
+        }
+
+        return $this->loadedData;
+    }
 }

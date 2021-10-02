@@ -1,0 +1,20 @@
+<!--
+  ~ Copyright (c) Zengliwei. All rights reserved.
+  ~ Each source file in this distribution is licensed under OSL 3.0, see LICENSE for details.
+  -->
+<div class="admin__field-value">
+    <table class="data-grid">
+        <thead>
+        <tr>
+            <th class="data-grid-th field"><span data-bind="i18n: 'Field'"></span></th>
+            <th class="data-grid-th value"><span data-bind="i18n: 'Value'"></span></th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach: value">
+        <tr data-bind='css: {"_odd-row": $index() % 2 == 1}'>
+            <td class="field"><span data-bind="text: field"/></td>
+            <td class="value"><span data-bind="text: value"/></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
