@@ -39,6 +39,7 @@
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
         <filterSearch name="fulltext"/>
+        <filters name="listing_filters"/>
         <paging name="listing_paging"/>
     </listingToolbar>
     <columns name="forms_post_record_columns">
@@ -74,16 +75,29 @@
                 <label translate="true">Form Name</label>
             </settings>
         </column>
+        <column name="name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Form Name</label>
+            </settings>
+        </column>
         <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date"
                 component="Magento_Ui/js/grid/columns/date">
             <settings>
                 <filter>dateRange</filter>
                 <dataType>date</dataType>
-                <label translate="true">Created At</label>
+                <label translate="true">Post Time</label>
                 <sorting>desc</sorting>
             </settings>
         </column>
         <actionsColumn name="actions" class="CrazyCat\Base\Ui\Component\Listing\Column\Actions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="actions" xsi:type="array">
+                        <item name="0" xsi:type="string">view</item>
+                    </item>
+                </item>
+            </argument>
             <settings>
                 <fieldAction>
                     <params>

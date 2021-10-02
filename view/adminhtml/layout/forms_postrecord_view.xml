@@ -8,7 +8,7 @@
     <update handle="editor"/>
     <body>
         <referenceContainer name="content">
-            <uiComponent name="forms_post_record_form"/>
+            <uiComponent name="forms_post_record_view"/>
         </referenceContainer>
     </body>
 </page>

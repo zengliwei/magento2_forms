@@ -133,28 +133,9 @@ class Post extends Action implements HttpPostActionInterface
             return $resultRedirect->setUrl($redirectUrl);
         }
 
-        $fromName = $form->getDataByKey(Form::FIELD_FROM_NAME);
-        $fromEmail = $form->getDataByKey(Form::FIELD_FROM_NAME);
-        $toName = $form->getDataByKey(Form::FIELD_FROM_NAME);
-        $toEmail = $form->getDataByKey(Form::FIELD_FROM_NAME);
-
         $storeId = $this->storeManager->getStore()->getId();
-        if (!$fromEmail) {
-            $sender = $this->senderResolver->resolve(
-                $this->scopeConfig->getValue(
-                    'contact/forms/sender_email_identity',
-                    ScopeInterface::SCOPE_STORE,
-                    $storeId
-                ),
-                $storeId
-            );
-            $fromName = $sender['name'];
-            $fromEmail = $sender['email'];
-        }
-        if (!$toEmail) {
-            $toName = $this->scopeConfig->getValue('contact/forms/to_name', ScopeInterface::SCOPE_STORE, $storeId);
-            $toEmail = $this->scopeConfig->getValue('contact/forms/to_email', ScopeInterface::SCOPE_STORE, $storeId);
-        }
+        $sender = $this->senderResolver->resolve($form->getDataByKey(Form::FIELD_SENDER), $storeId);
+        $recipients = preg_split('/\s*,\s*/', $form->getDataByKey(Form::FIELD_RECIPIENTS));
 
         try {
             /** @var $postRecord PostRecord */
@@ -166,10 +147,9 @@ class Post extends Action implements HttpPostActionInterface
                         PostRecord::FIELD_FORM_ID    => $formId,
                         PostRecord::FIELD_NAME       => $form->getDataByKey(Form::FIELD_NAME),
                         PostRecord::FIELD_DATA       => json_encode($post),
-                        PostRecord::FIELD_FROM_NAME  => $fromName,
-                        PostRecord::FIELD_FROM_EMAIL => $fromEmail,
-                        PostRecord::FIELD_TO_NAME    => $toName,
-                        PostRecord::FIELD_TO_EMAIL   => $toEmail
+                        PostRecord::FIELD_FROM_NAME  => $sender['name'],
+                        PostRecord::FIELD_FROM_EMAIL => $sender['email'],
+                        PostRecord::FIELD_RECIPIENTS => implode(', ', $recipients)
                     ]
                 )
             );
@@ -183,12 +163,13 @@ class Post extends Action implements HttpPostActionInterface
             foreach ($post as $key => $value) {
                 $data[] = ['field' => $key, 'value' => $value];
             }
-            $this->transportBuilder->setTemplateIdentifier($templateId);
-            $this->transportBuilder->setTemplateOptions(['area' => Area::AREA_FRONTEND, 'store' => $storeId]);
-            $this->transportBuilder->setTemplateVars(['data' => $data]);
-            $this->transportBuilder->setFromByScope(['name' => $fromName, 'email' => $fromEmail], $storeId);
-            $this->transportBuilder->addTo($toEmail, $toName);
-            $this->transportBuilder->getTransport()->sendMessage();
+            $this->transportBuilder->setTemplateIdentifier($templateId)
+                ->setTemplateOptions(['area' => Area::AREA_FRONTEND, 'store' => $storeId])
+                ->setTemplateVars(['data' => $data])
+                ->setFromByScope(['name' => $sender['name'], 'email' => $sender['email']], $storeId)
+                ->addTo($recipients)
+                ->getTransport()
+                ->sendMessage();
 
             $this->messageManager->addSuccessMessage(__('Form post successfully.'));
         } catch (\Exception $e) {

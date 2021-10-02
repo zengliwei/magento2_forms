@@ -20,8 +20,7 @@ class PostRecord extends AbstractModel
     public const FIELD_DATA = 'data';
     public const FIELD_FROM_NAME = 'from_name';
     public const FIELD_FROM_EMAIL = 'from_email';
-    public const FIELD_TO_NAME = 'to_name';
-    public const FIELD_TO_EMAIL = 'to_email';
+    public const FIELD_RECIPIENTS = 'recipients';
 
     /**
      * @inheritDoc

@@ -13,7 +13,7 @@ use CrazyCat\Forms\Model\Form\PostRecord as Model;
  * @author  Zengliwei <zengliwei@163.com>
  * @url https://github.com/zengliwei/magento2_forms
  */
-class Edit extends AbstractEditAction
+class View extends AbstractEditAction
 {
     public const ADMIN_RESOURCE = 'CrazyCat_Forms::forms_post_record';
 

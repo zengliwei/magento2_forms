@@ -1,0 +1,50 @@
+<?php
+/*
+ * Copyright (c) Zengliwei. All rights reserved.
+ * Each source file in this distribution is licensed under OSL 3.0, see LICENSE for details.
+ */
+
+use CrazyCat\Forms\Block\Widget\Form;
+
+/** @var Form $block */
+$blockId = $block->getJsId();
+?>
+<form method="post"
+      action="<?= $block->escapeUrl($block->getFormAction()) ?>"
+      data-mage-init='{"validation": {}}'>
+    <?= $block->getHiddenInputHtml(); /* @noEscape */ ?>
+    <fieldset class="fieldset">
+        <div class="field required">
+            <label for="<?= $blockId /* @noEscape */ ?>-firstname" class="label">
+                <?= $block->escapeHtml(__('Firstname')) ?>
+            </label>
+            <div class="control">
+                <input id="<?= $blockId /* @noEscape */ ?>-firstname" type="text" name="data[Firstname]"
+                       class="input-text required-entry"/>
+            </div>
+        </div>
+        <div class="field required">
+            <label for="<?= $blockId /* @noEscape */ ?>-lastname" class="label">
+                <?= $block->escapeHtml(__('Lastname')) ?>
+            </label>
+            <div class="control">
+                <input id="<?= $blockId /* @noEscape */ ?>-lastname" type="text" name="data[Lastname]"
+                       class="input-text required-entry"/>
+            </div>
+        </div>
+        <div class="field required">
+            <label for="<?= $blockId /* @noEscape */ ?>-email" class="label">
+                <?= $block->escapeHtml(__('Email')) ?>
+            </label>
+            <div class="control">
+                <input id="<?= $blockId /* @noEscape */ ?>-email" type="text" name="data[Email]"
+                       class="input-text required-entry validate-email"/>
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <button type="submit" class="action primary">
+            <span><?= $block->escapeHtml(__('Submit')) ?></span>
+        </button>
+    </div>
+</form>

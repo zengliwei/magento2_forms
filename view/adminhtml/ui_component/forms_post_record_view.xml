@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) Zengliwei. All rights reserved.
+  ~ Each source file in this distribution is licensed under OSL 3.0, see LICENSE for details.
+  -->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">forms_post_record_view.form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">General Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="back">
+                <label translate="true">Back</label>
+                <class>back</class>
+                <url path="*/*/index"/>
+            </button>
+        </buttons>
+        <namespace>forms_post_record_view</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>forms_post_record_view.forms_post_record_view_data_provider</dep>
+        </deps>
+    </settings>
+    <dataSource name="form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <dataProvider class="CrazyCat\Forms\Model\Form\PostRecord\DataProvider"
+                      name="forms_post_record_view_post_record_data_provider">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general">
+        <settings>
+            <label/>
+        </settings>
+        <field name="name" formElement="input">
+            <settings>
+                <label translate="true">Form Name</label>
+                <dataScope>data.name</dataScope>
+                <elementTmpl>ui/form/element/text</elementTmpl>
+            </settings>
+        </field>
+        <field name="from_name" formElement="input">
+            <settings>
+                <label translate="true">From Name</label>
+                <dataScope>data.from_name</dataScope>
+                <elementTmpl>ui/form/element/text</elementTmpl>
+            </settings>
+        </field>
+        <field name="from_email" formElement="input">
+            <settings>
+                <label translate="true">From Email</label>
+                <dataScope>data.from_email</dataScope>
+                <elementTmpl>ui/form/element/text</elementTmpl>
+            </settings>
+        </field>
+        <field name="recipients" formElement="input">
+            <settings>
+                <label translate="true">Recipients</label>
+                <dataScope>data.recipients</dataScope>
+                <elementTmpl>ui/form/element/text</elementTmpl>
+            </settings>
+        </field>
+        <field name="data" formElement="input">
+            <settings>
+                <label translate="true">Data</label>
+                <dataScope>data.data</dataScope>
+                <elementTmpl>ui/form/element/text</elementTmpl>
+            </settings>
+        </field>
+    </fieldset>
+</form>

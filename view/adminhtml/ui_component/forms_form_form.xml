@@ -119,7 +119,7 @@
                 </item>
             </argument>
             <settings>
-                <label translate="true">Name</label>
+                <label translate="true">Form Name</label>
                 <dataType>text</dataType>
                 <dataScope>data.name</dataScope>
                 <validation>
@@ -156,6 +156,45 @@
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                     <rule name="no-marginal-whitespace" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="sender" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <dataScope>data.sender</dataScope>
+                <label translate="true">Email Sender</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Config\Model\Config\Source\Email\Identity"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="recipients" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <dataScope>data.recipients</dataScope>
+                <label translate="true">Recipients</label>
+                <notice>Separated by comma</notice>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-emails" xsi:type="boolean">true</rule>
                 </validation>
             </settings>
         </field>
