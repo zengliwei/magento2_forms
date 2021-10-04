@@ -12,16 +12,16 @@ use CrazyCat\Forms\Model\Form\PostRecordFactory;
 use CrazyCat\Forms\Model\FormFactory;
 use CrazyCat\Forms\Model\ResourceModel\Form as ResourceForm;
 use CrazyCat\Forms\Model\ResourceModel\Form\PostRecord as ResourceRecord;
-use Magento\Framework\App\Action\Action;
-use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Mail\Template\SenderResolverInterface;
 use Magento\Framework\Mail\Template\TransportBuilder;
+use Magento\Framework\Message\ManagerInterface as MessageManagerInterface;
 use Magento\Framework\Url\DecoderInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
@@ -30,7 +30,7 @@ use Magento\Store\Model\StoreManagerInterface;
  * @author  Zengliwei <zengliwei@163.com>
  * @url https://github.com/zengliwei/magento2_forms
  */
-class Post extends Action implements HttpPostActionInterface
+class Post implements HttpPostActionInterface
 {
     /**
      * @var FormFactory
@@ -38,19 +38,34 @@ class Post extends Action implements HttpPostActionInterface
     private $formFactory;
 
     /**
+     * @var MessageManagerInterface
+     */
+    protected $messageManager;
+
+    /**
      * @var PostRecordFactory
      */
     protected $postRecordFactory;
 
     /**
+     * @var RequestInterface
+     */
+    protected $request;
+
+    /**
      * @var ResourceForm
      */
-    private $resourceForm;
+    protected $resourceForm;
 
     /**
      * @var ResourceRecord
      */
     protected $resourceRecord;
+
+    /**
+     * @var ResultFactory
+     */
+    protected $resultFactory;
 
     /**
      * @var ScopeConfigInterface
@@ -80,37 +95,43 @@ class Post extends Action implements HttpPostActionInterface
     /**
      * @param DecoderInterface        $urlDecoder
      * @param FormFactory             $formFactory
+     * @param MessageManagerInterface $messageManager
      * @param PostRecordFactory       $postRecordFactory
+     * @param RequestInterface        $request
      * @param ResourceForm            $resourceForm
      * @param ResourceRecord          $resourceRecord
+     * @param ResultFactory           $resultFactory
      * @param ScopeConfigInterface    $scopeConfig
      * @param SenderResolverInterface $senderResolver
      * @param StoreManagerInterface   $storeManager
      * @param TransportBuilder        $transportBuilder
-     * @param Context                 $context
      */
     public function __construct(
         DecoderInterface $urlDecoder,
         FormFactory $formFactory,
+        MessageManagerInterface $messageManager,
         PostRecordFactory $postRecordFactory,
+        RequestInterface $request,
         ResourceForm $resourceForm,
         ResourceRecord $resourceRecord,
+        ResultFactory $resultFactory,
         ScopeConfigInterface $scopeConfig,
         SenderResolverInterface $senderResolver,
         StoreManagerInterface $storeManager,
-        TransportBuilder $transportBuilder,
-        Context $context
+        TransportBuilder $transportBuilder
     ) {
         $this->formFactory = $formFactory;
+        $this->messageManager = $messageManager;
         $this->postRecordFactory = $postRecordFactory;
+        $this->request = $request;
         $this->resourceForm = $resourceForm;
         $this->resourceRecord = $resourceRecord;
-        $this->urlDecoder = $urlDecoder;
+        $this->resultFactory = $resultFactory;
         $this->scopeConfig = $scopeConfig;
         $this->senderResolver = $senderResolver;
         $this->storeManager = $storeManager;
         $this->transportBuilder = $transportBuilder;
-        parent::__construct($context);
+        $this->urlDecoder = $urlDecoder;
     }
 
     /**
@@ -122,11 +143,11 @@ class Post extends Action implements HttpPostActionInterface
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
 
         $redirectUrl = $this->urlDecoder->decode(
-            $this->getRequest()->getParam(ActionInterface::PARAM_NAME_URL_ENCODED)
+            $this->request->getParam(ActionInterface::PARAM_NAME_URL_ENCODED)
         );
 
         /** @var $form Form */
-        $formId = $this->getRequest()->getParam('id');
+        $formId = $this->request->getParam('id');
         $form = $this->formFactory->create();
         $this->resourceForm->load($form, $formId);
         if (!$form->getId()) {
@@ -139,7 +160,7 @@ class Post extends Action implements HttpPostActionInterface
 
         try {
             /** @var $postRecord PostRecord */
-            $post = $this->getRequest()->getPostValue('data');
+            $post = $this->request->getPostValue('data');
             $postRecord = $this->postRecordFactory->create();
             $this->resourceRecord->save(
                 $postRecord->addData(

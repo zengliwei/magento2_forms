@@ -88,12 +88,6 @@
                 <label translate="true">Identifier</label>
             </settings>
         </column>
-        <column name="template">
-            <settings>
-                <filter>text</filter>
-                <label translate="true">Template</label>
-            </settings>
-        </column>
         <actionsColumn name="actions" class="CrazyCat\Base\Ui\Component\Listing\Column\Actions">
             <settings>
                 <fieldAction>

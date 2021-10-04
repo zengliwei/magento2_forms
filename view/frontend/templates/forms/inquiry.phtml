@@ -12,7 +12,6 @@ $blockId = $block->getJsId();
 <form method="post"
       action="<?= $block->escapeUrl($block->getFormAction()) ?>"
       data-mage-init='{"validation": {}}'>
-    <?= $block->getHiddenInputHtml(); /* @noEscape */ ?>
     <fieldset class="fieldset">
         <div class="field required">
             <label for="<?= $blockId /* @noEscape */ ?>-firstname" class="label">
@@ -42,6 +41,8 @@ $blockId = $block->getJsId();
             </div>
         </div>
     </fieldset>
+    <?= $block->getHiddenInputHtml(); /* @noEscape */ ?>
+    <?= $block->getChildHtml('captcha') ?>
     <div class="actions-toolbar">
         <button type="submit" class="action primary">
             <span><?= $block->escapeHtml(__('Submit')) ?></span>

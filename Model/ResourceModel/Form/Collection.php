@@ -38,4 +38,16 @@ class Collection extends AbstractCollection
     {
         $this->_init(Model::class, ResourceModel::class);
     }
+
+    /**
+     * @inheritDoc
+     */
+    protected function _afterLoad()
+    {
+        parent::_afterLoad();
+        foreach ($this->_items as $item) {
+            $item->setData(Model::FIELD_ELEMENTS, json_decode($item->getDataByKey(Model::FIELD_ELEMENTS), true));
+        }
+        return $this;
+    }
 }

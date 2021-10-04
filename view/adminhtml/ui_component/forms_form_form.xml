@@ -143,22 +143,6 @@
                 </validation>
             </settings>
         </field>
-        <field name="template" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">data</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <dataScope>data.template</dataScope>
-                <label translate="true">Template</label>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                    <rule name="no-marginal-whitespace" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
-        </field>
         <field name="sender" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -198,5 +182,111 @@
                 </validation>
             </settings>
         </field>
+    </fieldset>
+    <fieldset name="elements">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Elements</label>
+        </settings>
+        <dynamicRows name="elements">
+            <settings>
+                <dataScope>data</dataScope>
+                <addButtonLabel translate="true">Add Element</addButtonLabel>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                    <class name="form-elements">true</class>
+                </additionalClasses>
+                <dndConfig>
+                    <param name="enabled" xsi:type="boolean">true</param>
+                    <param name="draggableElementClass" xsi:type="string">_dragged</param>
+                    <param name="tableClass" xsi:type="string">table.admin__dynamic-rows</param>
+                </dndConfig>
+            </settings>
+            <container name="record" component="Magento_Ui/js/dynamic-rows/record">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isTemplate" xsi:type="boolean">true</item>
+                        <item name="is_collection" xsi:type="boolean">true</item>
+                        <item name="componentType" xsi:type="string">container</item>
+                    </item>
+                </argument>
+                <field name="label" formElement="input">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                            <item name="columnsHeaderClasses" xsi:type="string">label</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <label>Label</label>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                    </settings>
+                </field>
+                <field name="identifier" formElement="input">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <label>Identifier</label>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                    </settings>
+                </field>
+                <field name="type" formElement="select">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <label>Type</label>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="CrazyCat\Forms\Model\Config\Source\FormElementType"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+                <field name="validation" formElement="select" component="Magento_Ui/js/form/element/ui-select">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                            <item name="template" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <label>Validation</label>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <options class="CrazyCat\Forms\Model\Config\Source\ValidationType"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+                <field name="config" formElement="textarea">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="fit" xsi:type="boolean">false</item>
+                        </item>
+                    </argument>
+                    <settings>
+                        <label>Configuration</label>
+                    </settings>
+                </field>
+                <actionDelete/>
+            </container>
+        </dynamicRows>
     </fieldset>
 </form>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) Zengliwei. All rights reserved.
+  ~ Each source file in this distribution is licensed under OSL 3.0, see LICENSE for details.
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_predispatch_forms_form_post">
+        <observer name="recaptcha_on_customized_form" instance="CrazyCat\Forms\Observer\ReCaptchaCheck"/>
+    </event>
+</config>

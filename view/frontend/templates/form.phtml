@@ -1,0 +1,29 @@
+<?php
+/*
+ * Copyright (c) Zengliwei. All rights reserved.
+ * Each source file in this distribution is licensed under OSL 3.0, see LICENSE for details.
+ */
+
+use CrazyCat\Forms\Block\Widget\Form;
+use CrazyCat\Forms\Model\Form as Model;
+
+/** @var Form $block */
+?>
+<h2><?= $block->escapeHtml($block->getForm()->getDataByKey(Model::FIELD_NAME)) ?></h2>
+<form method="post"
+      action="<?= $block->escapeUrl($block->getFormAction()) ?>"
+      data-mage-init='{"validation": {}}'>
+    <fieldset class="fieldset">
+        <div data-bind="scope: '<?= $block->getJsId() /* @noEscape */ ?>.form-elements'">
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        </div>
+        <script type="text/x-magento-init"><?= $block->getJsLayout() /* @noEscape */ ?></script>
+    </fieldset>
+    <?= $block->getHiddenInputHtml(); /* @noEscape */ ?>
+    <?= $block->getChildHtml('captcha') ?>
+    <div class="actions-toolbar">
+        <button type="submit" class="action primary">
+            <span><?= $block->escapeHtml(__('Submit')) ?></span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,33 @@
+/*
+ * Copyright (c) Zengliwei. All rights reserved.
+ * Each source file in this distribution is licensed under OSL 3.0, see LICENSE for details.
+ */
+.form-elements {
+    user-select: none;
+
+    table.admin__dynamic-rows {
+        tr {
+            th:first-child,
+            th:last-child {
+                width: 48px;
+            }
+
+            th:nth-child(2),
+            th:nth-child(3),
+            th:nth-child(4),
+            th:nth-child(5) {
+                width: 15%;
+            }
+
+            td {
+                .admin__form-field-label {
+                    display: none;
+                }
+            }
+        }
+
+        .admin__control-select {
+            width: 100%;
+        }
+    }
+}
