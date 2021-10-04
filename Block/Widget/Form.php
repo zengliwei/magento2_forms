@@ -257,9 +257,9 @@ class Form extends Template implements BlockInterface
     }
 
     /**
-     * @inheritDoc
+     * Render elements
      */
-    protected function _toHtml()
+    protected function renderElements()
     {
         $blockId = $this->getJsId();
 
@@ -292,6 +292,19 @@ class Form extends Template implements BlockInterface
                 ]
             ]
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function _toHtml()
+    {
+        $formModel = $this->getForm();
+        if ($formModel->getDataByKey(Model::FIELD_RENDERER) == Model::RENDERER_TEMPLATE) {
+            $this->_template = $formModel->getDataByKey(Model::FIELD_TEMPLATE);
+        } else {
+            $this->renderElements();
+        }
         return parent::_toHtml();
     }
 

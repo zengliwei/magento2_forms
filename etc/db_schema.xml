@@ -14,11 +14,15 @@
         <column xsi:type="varchar" name="name" comment="Name"
                 nullable="false" length="256"/>
         <column xsi:type="varchar" name="sender" comment="Email Sender"
-                nullable="true" length="256"/>
+                nullable="false" length="256"/>
         <column xsi:type="varchar" name="recipients" comment="Recipients"
+                nullable="false" length="256"/>
+        <column xsi:type="varchar" name="renderer" comment="Renderer"
+                nullable="false" length="16"/>
+        <column xsi:type="varchar" name="template" comment="Template"
                 nullable="true" length="256"/>
         <column xsi:type="text" name="elements" comment="Elements"
-                nullable="false"/>
+                nullable="true"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>

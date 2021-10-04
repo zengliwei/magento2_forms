@@ -182,10 +182,91 @@
                 </validation>
             </settings>
         </field>
+        <field name="renderer" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <dataScope>data.renderer</dataScope>
+                <label translate="true">Renderer</label>
+                <switcherConfig>
+                    <enabled>true</enabled>
+                    <rules>
+                        <rule name="0">
+                            <value>template</value>
+                            <actions>
+                                <action name="0">
+                                    <target>forms_form_form.forms_form_form.general.template</target>
+                                    <callback>show</callback>
+                                </action>
+                                <action name="1">
+                                    <target>forms_form_form.forms_form_form.elements</target>
+                                    <callback>visible</callback>
+                                    <params>
+                                        <param name="0" xsi:type="boolean">false</param>
+                                    </params>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="1">
+                            <value>config_elements</value>
+                            <actions>
+                                <action name="0">
+                                    <target>forms_form_form.forms_form_form.general.template</target>
+                                    <callback>hide</callback>
+                                </action>
+                                <action name="1">
+                                    <target>forms_form_form.forms_form_form.elements</target>
+                                    <callback>visible</callback>
+                                    <params>
+                                        <param name="0" xsi:type="boolean">true</param>
+                                    </params>
+                                </action>
+                            </actions>
+                        </rule>
+                    </rules>
+                </switcherConfig>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">template</item>
+                                <item name="label" xsi:type="string" translate="true">Template</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">config_elements</item>
+                                <item name="label" xsi:type="string" translate="true">Configure Elements</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="template" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">data</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <dataScope>data.template</dataScope>
+                <label translate="true">Template</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="no-marginal-whitespace" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
     </fieldset>
     <fieldset name="elements">
         <settings>
-            <collapsible>true</collapsible>
+            <collapsible>false</collapsible>
             <label translate="true">Elements</label>
         </settings>
         <dynamicRows name="elements">

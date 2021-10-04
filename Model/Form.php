@@ -16,9 +16,10 @@ class Form extends AbstractModel
 {
     public const FIELD_NAME = 'name';
     public const FIELD_IDENTIFIER = 'identifier';
-    public const FIELD_TEMPLATE = 'template';
     public const FIELD_SENDER = 'sender';
     public const FIELD_RECIPIENTS = 'recipients';
+    public const FIELD_RENDERER = 'renderer';
+    public const FIELD_TEMPLATE = 'template';
     public const FIELD_ELEMENTS = 'elements';
 
     public const ELEMENT_LABEL = 'label';
@@ -36,6 +37,9 @@ class Form extends AbstractModel
     public const ELEMENT_TYPE_COUNTRY = 'country';
     public const ELEMENT_TYPE_REGION = 'region';
     public const ELEMENT_TYPE_POSTCODE = 'postcode';
+
+    public const RENDERER_TEMPLATE = 'template';
+    public const RENDERER_CONFIG_ELEMENTS = 'config_elements';
 
     /**
      * @inheritDoc
