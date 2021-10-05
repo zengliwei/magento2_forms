@@ -2,6 +2,9 @@
 
 Help to create and handle customized forms, show as widgets.
 
+Administrator will receive an email after customer submitting a form, and is able to check submit records through admin
+panel.
+
 ## Installation
 
 1. Execute this command to download the module through composer:<br>
