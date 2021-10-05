@@ -100,3 +100,10 @@ Using Configure Elements as renderer means that elements in the block will be re
 The element management is a drag and drop box, it provides some common types of frontend model and validation to choose.
 
 **Configuration** column of the elements is to add JavaScript settings for related UI component.
+
+### CAPTCHA
+
+Administrator is able to enable the CAPTCHA through switching this setting in admin panel:<br>
+`STORES / Settings / Configuration > SECURITY / Google reCAPTCHA Storefront > Storefront / Enable for Customized Forms`
+
+And fill in `Google API Website Key` and `Google API Secret Key` of the related service.
