@@ -2,7 +2,7 @@
   ~ Copyright (c) Zengliwei. All rights reserved.
   ~ Each source file in this distribution is licensed under OSL 3.0, see LICENSE for details.
   -->
-<div class="admin__field-value">
+<div class="admin__field-value form-data">
     <table class="data-grid">
         <thead>
         <tr>
@@ -13,7 +13,7 @@
         <tbody data-bind="foreach: value">
         <tr data-bind='css: {"_odd-row": $index() % 2 == 1}'>
             <td class="field"><span data-bind="text: field"/></td>
-            <td class="value"><span data-bind="text: value"/></td>
+            <td class="value"><span data-bind="html: value"/></td>
         </tr>
         </tbody>
     </table>

@@ -8,13 +8,14 @@ use CrazyCat\Forms\Block\Widget\Form;
 use CrazyCat\Forms\Model\Form as Model;
 
 /** @var Form $block */
+$blockId = $block->getJsId();
 ?>
 <h2><?= $block->escapeHtml($block->getForm()->getDataByKey(Model::FIELD_NAME)) ?></h2>
 <form method="post"
       action="<?= $block->escapeUrl($block->getFormAction()) ?>"
-      data-mage-init='{"validation": {}}'>
+      data-mage-init='{"CrazyCat_Forms/js/validation": {"blockId": "<?= $blockId /* @noEscape */ ?>"}}'>
     <fieldset class="fieldset">
-        <div data-bind="scope: '<?= $block->getJsId() /* @noEscape */ ?>.form-elements'">
+        <div data-bind="scope: '<?= $blockId /* @noEscape */ ?>.form-elements'">
             <!-- ko template: getTemplate() --><!-- /ko -->
         </div>
         <script type="text/x-magento-init"><?= $block->getJsLayout() /* @noEscape */ ?></script>

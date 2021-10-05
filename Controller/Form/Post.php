@@ -159,15 +159,34 @@ class Post implements HttpPostActionInterface
         $recipients = preg_split('/\s*,\s*/', $form->getDataByKey(Form::FIELD_RECIPIENTS));
 
         try {
-            /** @var $postRecord PostRecord */
+            $recordData = $emailData = [];
             $post = $this->request->getPostValue('data');
+            if ($form->getDataByKey(Form::FIELD_RENDERER) == Form::RENDERER_CONFIG_ELEMENTS) {
+                $mappings = [];
+                foreach ($form->getDataByKey(Form::FIELD_ELEMENTS) as $elementSource) {
+                    $mappings[$elementSource[Form::ELEMENT_IDENTIFIER]] = $elementSource[Form::ELEMENT_LABEL];
+                }
+                foreach ($post as $key => $value) {
+                    $value = nl2br($value);
+                    $recordData[$mappings[$key]] = $value;
+                    $emailData[] = ['field' => $mappings[$key], 'value' => $value];
+                }
+            } else {
+                foreach ($post as $key => $value) {
+                    $value = nl2br($value);
+                    $recordData[$key] = $value;
+                    $emailData[] = ['field' => $key, 'value' => $value];
+                }
+            }
+
+            /** @var $postRecord PostRecord */
             $postRecord = $this->postRecordFactory->create();
             $this->resourceRecord->save(
                 $postRecord->addData(
                     [
                         PostRecord::FIELD_FORM_ID    => $formId,
                         PostRecord::FIELD_NAME       => $form->getDataByKey(Form::FIELD_NAME),
-                        PostRecord::FIELD_DATA       => json_encode($post),
+                        PostRecord::FIELD_DATA       => json_encode($recordData),
                         PostRecord::FIELD_FROM_NAME  => $sender['name'],
                         PostRecord::FIELD_FROM_EMAIL => $sender['email'],
                         PostRecord::FIELD_RECIPIENTS => implode(', ', $recipients)
@@ -180,13 +199,9 @@ class Post implements HttpPostActionInterface
                 ScopeInterface::SCOPE_STORE,
                 $storeId
             );
-            $data = [];
-            foreach ($post as $key => $value) {
-                $data[] = ['field' => $key, 'value' => $value];
-            }
             $this->transportBuilder->setTemplateIdentifier($templateId)
                 ->setTemplateOptions(['area' => Area::AREA_FRONTEND, 'store' => $storeId])
-                ->setTemplateVars(['data' => $data])
+                ->setTemplateVars(['data' => $emailData])
                 ->setFromByScope(['name' => $sender['name'], 'email' => $sender['email']], $storeId)
                 ->addTo($recipients)
                 ->getTransport()

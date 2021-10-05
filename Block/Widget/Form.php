@@ -9,9 +9,11 @@ namespace CrazyCat\Forms\Block\Widget;
 use CrazyCat\Forms\Model\Form as Model;
 use CrazyCat\Forms\Model\FormFactory;
 use CrazyCat\Forms\Model\ResourceModel\Form as ResourceModel;
-use Magento\Directory\Model\Config\Source\Country as CountrySource;
+use Magento\Directory\Model\ResourceModel\Country\Collection as CountryCollection;
 use Magento\Directory\Model\ResourceModel\Region\CollectionFactory as RegionCollectionFactory;
+use Magento\Directory\Model\TopDestinationCountries;
 use Magento\Framework\App\ActionInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Url\EncoderInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\ReCaptchaUi\Block\ReCaptcha;
@@ -29,9 +31,9 @@ class Form extends Template implements BlockInterface
     private $countryField = null;
 
     /**
-     * @var CountrySource
+     * @var CountryCollection\
      */
-    private $countrySource;
+    private $countryCollection;
 
     /**
      * @var Model|null
@@ -59,32 +61,48 @@ class Form extends Template implements BlockInterface
     private $resourceModel;
 
     /**
+     * @var ScopeConfigInterface
+     */
+    private $scopeConfig;
+
+    /**
+     * @var TopDestinationCountries
+     */
+    private $topDestinationCountries;
+
+    /**
      * @var EncoderInterface
      */
     private $urlEncoder;
 
     /**
-     * @param CountrySource           $countrySource
+     * @param CountryCollection       $countryCollection
      * @param FormFactory             $formFactory
      * @param RegionCollectionFactory $regionCollectionFactory
      * @param ResourceModel           $resourceModel
+     * @param ScopeConfigInterface    $scopeConfig
+     * @param TopDestinationCountries $topDestinationCountries
      * @param EncoderInterface        $urlEncoder
      * @param Template\Context        $context
      * @param array                   $data
      */
     public function __construct(
-        CountrySource $countrySource,
+        CountryCollection $countryCollection,
         FormFactory $formFactory,
         RegionCollectionFactory $regionCollectionFactory,
         ResourceModel $resourceModel,
+        ScopeConfigInterface $scopeConfig,
+        TopDestinationCountries $topDestinationCountries,
         EncoderInterface $urlEncoder,
         Template\Context $context,
         array $data = []
     ) {
-        $this->countrySource = $countrySource;
+        $this->countryCollection = $countryCollection;
         $this->formFactory = $formFactory;
         $this->regionCollectionFactory = $regionCollectionFactory;
         $this->resourceModel = $resourceModel;
+        $this->scopeConfig = $scopeConfig;
+        $this->topDestinationCountries = $topDestinationCountries;
         $this->urlEncoder = $urlEncoder;
         parent::__construct($context, $data);
         $this->setTemplate('CrazyCat_Forms::form.phtml');
@@ -196,6 +214,13 @@ class Form extends Template implements BlockInterface
                 ];
                 break;
 
+            case Model::ELEMENT_TYPE_SELECT:
+                $config = [
+                    'component' => 'Magento_Ui/js/form/element/select',
+                    'template'  => 'ui/form/field'
+                ];
+                break;
+
             case Model::ELEMENT_TYPE_TEXTAREA:
                 $config = [
                     'component' => 'Magento_Ui/js/form/element/textarea',
@@ -210,18 +235,14 @@ class Form extends Template implements BlockInterface
                 ];
                 break;
 
-            case Model::ELEMENT_TYPE_SELECT:
-                $config = [
-                    'component' => 'Magento_Ui/js/form/element/select',
-                    'template'  => 'ui/form/field'
-                ];
-                break;
-
             case Model::ELEMENT_TYPE_COUNTRY:
+                $this->scopeConfig;
                 $config = [
                     'component' => 'Magento_Ui/js/form/element/country',
                     'template'  => 'ui/form/field',
-                    'options'   => $this->countrySource->toOptionArray()
+                    'options'   => $this->countryCollection->loadByStore()->setForegroundCountries(
+                        $this->topDestinationCountries->getTopDestinations()
+                    )->toOptionArray()
                 ];
                 break;
 
@@ -236,6 +257,17 @@ class Form extends Template implements BlockInterface
                         'field'  => 'country_id'
                     ],
                     'imports'     => [
+                        'countryOptions' => '${$.parentName}.' . $this->countryField . ':indexedOptions',
+                        'update'         => '${$.parentName}.' . $this->countryField . ':value'
+                    ]
+                ];
+                break;
+
+            case Model::ELEMENT_TYPE_POSTCODE:
+                $config = [
+                    'component' => 'Magento_Ui/js/form/element/post-code',
+                    'template'  => 'ui/form/field',
+                    'imports'   => [
                         'countryOptions' => '${$.parentName}.' . $this->countryField . ':indexedOptions',
                         'update'         => '${$.parentName}.' . $this->countryField . ':value'
                     ]
