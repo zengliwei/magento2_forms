@@ -18,7 +18,7 @@ Help to create and handle customized forms, show as widgets.
 
 ## How to use
 
-### Form creating steps
+### Create a Form
 
 1. Create a template file under CrazyCat_Forms folder of theme directory, for example:
    `[root]/app/design/frontend/[Vendor]/[theme]/CrazyCat_Forms/templates/forms/inquiry.phtml`<br>
@@ -26,13 +26,15 @@ Help to create and handle customized forms, show as widgets.
 2. Create a form through admin panel: `CONTENT / Forms / Forms > Add New Form`<br>
     - Form Name - Form name to show in form list, post record list and widget management
     - Identifier - Unique key of the form
-    - Template - Template path like `CrazyCat_Forms::forms/inquiry.phtml`
     - Email Sender - To select a sender from the list of which options are same with store config email identities
     - Recipients - Recipients emails, separated by comma
+    - Renderer - To render elements through customize a template or configure elements
+    - Template - Template path like `CrazyCat_Forms::forms/inquiry.phtml`
+    - Elements - Configure elements
 
 3. Create a `Form` widget through widget management or insert one through WYSIWYG editor to show in storefront
 
-### Form template elements
+### Form Template
 
 Here is an example of email template:
 
@@ -90,3 +92,11 @@ Several key points need to be noted:
 - Form action must be `$block->escapeUrl($block->getFormAction())`
 - Hidden fields are required: `$block->getHiddenInputHtml()`
 - Name of post elements must be wrapped with `data[]`
+
+### Form Elements
+
+Using Configure Elements as renderer means that elements in the block will be rendered with **UI components**.
+
+The element management is a drag and drop box, it provides some common types of frontend model and validation to choose.
+
+**Configuration** column of the elements is to add JavaScript settings for related UI component.
