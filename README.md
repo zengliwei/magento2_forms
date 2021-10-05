@@ -2,8 +2,8 @@
 
 Help to create and handle customized forms, show as widgets.
 
-Administrator will receive an email after customer submitting a form, and is able to check submit records through admin
-panel.
+Administrator will receive an email after customer submitting a form, and is able to check submit records
+through `CONTENT / Forms / Post Records` in admin panel.
 
 ## Installation
 
